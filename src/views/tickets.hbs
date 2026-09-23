@@ -1,25 +1,54 @@
 <h2>Service Tickets</h2>
+
+<form method="post" action="/tickets" class="panel form-grid">
+  <label>Customer
+    <select name="customer_id" required>
+      <option value="">Select customer</option>
+      {{#each customers}}
+        <option value="{{customer_id}}">{{name}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <label>Device
+    <select name="device_id">
+      <option value="">No device</option>
+      {{#each devices}}
+        <option value="{{device_id}}">{{serial_number}} · {{model}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <label class="wide">Issue summary <input name="summary" required></label>
+  <button type="submit">Create ticket</button>
+</form>
+
+<div class="table-wrap">
 <table>
-  <thead><tr><th>ID</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th></tr></thead>
+  <thead><tr><th>ID</th><th>Customer</th><th>Device</th><th>Issue / Status</th><th>Actions</th></tr></thead>
   <tbody>
     {{#each tickets}}
       <tr>
         <td>{{ticket_id}}</td>
         <td>{{customer_name}}</td>
         <td>{{serial_number}}</td>
-        <td>{{summary}}</td>
         <td>
-          <form method="post" action="/tickets/{{ticket_id}}/status">
+          <form method="post" action="/tickets/{{ticket_id}}/update" class="row-form">
+            <input name="summary" value="{{summary}}" required>
             <select name="status">
               <option value="{{status}}">{{status}}</option>
               <option value="open">open</option>
               <option value="in_progress">in_progress</option>
               <option value="resolved">resolved</option>
             </select>
-            <button type="submit">Update</button>
+            <button type="submit">Save</button>
+          </form>
+        </td>
+        <td>
+          <form method="post" action="/tickets/{{ticket_id}}/delete" onsubmit="return confirm('Delete this ticket?')">
+            <button class="danger" type="submit">Delete</button>
           </form>
         </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+</div>
