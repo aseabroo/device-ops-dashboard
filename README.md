@@ -2,6 +2,20 @@
 
 A full-stack portfolio project for managing connected devices, firmware releases, customer ownership, deployment relationships, and service tickets.
 
+## Application Preview
+
+### Operations Dashboard
+
+![Operations dashboard showing portfolio metrics](docs/images/dashboard.png)
+
+### Device Management
+
+![Device management interface](docs/images/devices.png)
+
+### Firmware Deployments
+
+![Firmware deployment relationship management](docs/images/deployments.png)
+
 ## Why this project exists
 
 Device Ops Dashboard is an independent rebuild of database and full-stack concepts I originally practiced in coursework. It is not a republished assignment solution. The data model, project structure, implementation, validation, seed data, and documentation were rebuilt for portfolio use.
