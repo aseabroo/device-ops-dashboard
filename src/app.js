@@ -4,9 +4,11 @@ const path = require('path');
 const express = require('express');
 const { engine } = require('express-handlebars');
 
+const dashboardRouter = require('./routes/dashboard');
 const customersRouter = require('./routes/customers');
 const devicesRouter = require('./routes/devices');
 const firmwareRouter = require('./routes/firmware');
+const deploymentsRouter = require('./routes/deployments');
 const ticketsRouter = require('./routes/tickets');
 
 const app = express();
@@ -20,14 +22,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/', (req, res) => {
-  res.render('home', { title: 'Device Ops Dashboard' });
-});
+app.get('/', (req, res) => res.redirect('/dashboard'));
 
+app.use('/dashboard', dashboardRouter);
 app.use('/customers', customersRouter);
 app.use('/devices', devicesRouter);
 app.use('/firmware', firmwareRouter);
+app.use('/deployments', deploymentsRouter);
 app.use('/tickets', ticketsRouter);
+
+app.use((req, res) => {
+  res.status(404).render('error', {
+    title: 'Not found',
+    message: 'The requested page does not exist.'
+  });
+});
 
 app.use((err, req, res, next) => {
   console.error(err);
