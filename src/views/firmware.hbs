@@ -1,0 +1,9 @@
+<h2>Firmware Releases</h2>
+<table>
+  <thead><tr><th>ID</th><th>Version</th><th>Released</th><th>Size (MB)</th><th>Status</th></tr></thead>
+  <tbody>
+    {{#each firmware}}
+      <tr><td>{{firmware_id}}</td><td>{{version}}</td><td>{{released_on}}</td><td>{{size_mb}}</td><td>{{release_status}}</td></tr>
+    {{/each}}
+  </tbody>
+</table>
