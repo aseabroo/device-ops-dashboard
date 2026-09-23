@@ -1,0 +1,25 @@
+<h2>Devices</h2>
+<table>
+  <thead><tr><th>ID</th><th>Serial</th><th>Model</th><th>Customer</th><th>Status</th></tr></thead>
+  <tbody>
+    {{#each devices}}
+      <tr>
+        <td>{{device_id}}</td>
+        <td>{{serial_number}}</td>
+        <td>{{model}}</td>
+        <td>{{customer_name}}</td>
+        <td>
+          <form method="post" action="/devices/{{device_id}}/status">
+            <select name="status">
+              <option value="{{status}}">{{status}}</option>
+              <option value="active">active</option>
+              <option value="maintenance">maintenance</option>
+              <option value="retired">retired</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
