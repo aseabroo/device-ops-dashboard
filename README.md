@@ -128,6 +128,33 @@ Unlike the earlier coursework implementation that inspired the rebuild, this ver
 
 ## Local Setup
 
+### Fast path with Docker
+
+If Docker Desktop is installed, this is the easiest way to run the project with a disposable local MySQL instance:
+
+```bash
+git clone https://github.com/aseabroo/device-ops-dashboard.git
+cd device-ops-dashboard
+cp .env.docker.example .env
+docker compose up -d
+npm install
+npm test
+npm start
+```
+
+Then open `http://localhost:3000`.
+
+The container exposes MySQL on local port `3307`, initializes the schema, and loads the synthetic seed data automatically on first startup.
+
+To reset the database completely:
+
+```bash
+docker compose down -v
+docker compose up -d
+```
+
+### Manual MySQL setup
+
 ### 1. Install dependencies
 
 ```bash
