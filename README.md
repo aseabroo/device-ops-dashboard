@@ -30,7 +30,8 @@ The goal is to demonstrate practical skills in:
 - modular Express routing;
 - many-to-many relationships;
 - foreign-key behavior;
-- testable utility code.
+- testable utility code;
+- database-backed HTTP integration testing.
 
 ## Stack
 
@@ -100,6 +101,7 @@ device-ops-dashboard/
 │   └── styles.css
 ├── src/
 │   ├── app.js
+│   ├── server.js
 │   ├── config/
 │   │   └── database.js
 │   ├── routes/
@@ -117,7 +119,8 @@ device-ops-dashboard/
 │       ├── home.hbs
 │       └── tickets.hbs
 ├── test/
-│   └── validation.test.js
+│   ├── validation.test.js
+│   └── integration.test.js
 ├── docs/
 │   └── architecture.md
 ├── .github/
@@ -214,7 +217,12 @@ Run:
 npm test
 ```
 
-The current test suite covers shared validation rules. Route and database integration tests are a planned extension.
+The test suite has two layers:
+
+- `npm run test:unit` covers reusable validation behavior.
+- `npm run test:integration` starts the Express app against a real MySQL database and exercises health, dashboard rendering, customer creation, parameterized persistence, and invalid-input rejection.
+
+GitHub Actions runs both suites. The integration job provisions MySQL 8.4, initializes the schema and seed data, and runs the HTTP/database checks against that disposable service.
 
 ## Current Features
 
@@ -229,15 +237,14 @@ The current test suite covers shared validation rules. Route and database integr
 - synthetic seed dataset;
 - reusable validation helpers with unit tests;
 - responsive server-rendered dashboard UI;
-- GitHub Actions unit-test workflow.
+- GitHub Actions unit and MySQL-backed integration-test workflows.
 
 ## Planned Improvements
 
 - pagination and filtering for larger datasets;
-- route-level and database integration tests;
-- Docker-based local database setup;
+- broader CRUD integration coverage across devices, firmware, deployments, and tickets;
 - richer dashboard trends and operational summaries;
-- screenshots and a deployed demo.
+- optional deployed demo.
 
 ## Portfolio Note
 

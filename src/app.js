@@ -12,8 +12,6 @@ const deploymentsRouter = require('./routes/deployments');
 const ticketsRouter = require('./routes/tickets');
 
 const app = express();
-const port = Number(process.env.PORT || 3000);
-
 function formatDate(value) {
   if (!value) return '—';
   const date = new Date(value);
@@ -57,6 +55,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/', (req, res) => res.redirect('/dashboard'));
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/dashboard', dashboardRouter);
 app.use('/customers', customersRouter);
@@ -80,6 +79,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Device Ops Dashboard listening on http://localhost:${port}`);
-});
+module.exports = app;

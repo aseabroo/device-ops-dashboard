@@ -45,6 +45,10 @@ Each resource has its own Express router. SQL statements use placeholders and bo
 
 The dashboard route runs aggregate queries for portfolio-friendly operational metrics.
 
+Application construction and server startup are separated: `src/app.js` exports the configured Express app, while `src/server.js` owns the listening socket. That keeps production startup simple while allowing route-level integration tests to start the app on an ephemeral port.
+
 ## Current tradeoffs
 
-The project intentionally stays small and server-rendered. It does not introduce an ORM, SPA framework, authentication layer, or container stack simply to increase technology count. Those would be reasonable extensions if the application moved beyond portfolio scope.
+The project intentionally stays small and server-rendered. It does not introduce an ORM, SPA framework, or authentication layer simply to increase technology count.
+
+Docker Compose is used only for reproducible local MySQL setup. GitHub Actions provisions a disposable MySQL service for integration tests, so database-backed routes can be exercised without turning the application into a larger infrastructure project.
