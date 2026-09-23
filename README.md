@@ -104,6 +104,11 @@ device-ops-dashboard/
 │       └── tickets.hbs
 ├── test/
 │   └── validation.test.js
+├── docs/
+│   └── architecture.md
+├── .github/
+│   └── workflows/
+│       └── test.yml
 ├── .env.example
 ├── .gitignore
 └── package.json
@@ -172,25 +177,26 @@ The current test suite covers shared validation rules. Route and database integr
 
 ## Current Features
 
-- customer listing and creation;
-- device inventory with customer ownership;
-- device lifecycle-status updates;
-- firmware release listing;
-- support-ticket listing;
-- support-ticket workflow updates;
-- normalized relational schema;
+- dashboard summary metrics for customers, devices, firmware, deployments, and unresolved tickets;
+- customer create, edit, and delete workflows;
+- device create, edit, lifecycle-status, and delete workflows;
+- firmware create, edit, and delete workflows;
+- many-to-many device-to-firmware deployment management;
+- service-ticket create, edit, workflow-status, and delete workflows;
+- parameterized SQL throughout the portfolio implementation;
+- normalized relational schema with explicit foreign-key behavior;
 - synthetic seed dataset;
-- responsive server-rendered dashboard UI.
+- reusable validation helpers with unit tests;
+- responsive server-rendered dashboard UI;
+- GitHub Actions unit-test workflow.
 
 ## Planned Improvements
 
-- full create/edit/delete workflows for all entities;
-- device-to-firmware deployment management;
-- pagination and filtering;
-- route-level integration tests;
+- pagination and filtering for larger datasets;
+- route-level and database integration tests;
 - Docker-based local database setup;
-- dashboard summary metrics;
-- screenshots and deployment demo.
+- richer dashboard trends and operational summaries;
+- screenshots and a deployed demo.
 
 ## Portfolio Note
 
