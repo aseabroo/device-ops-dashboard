@@ -21,7 +21,7 @@
     {{#each firmware}}
       <tr>
         <td><strong>{{version}}</strong></td>
-        <td>{{released_on}}</td>
+        <td>{{formatDate released_on}}</td>
         <td>
           <form method="post" action="/firmware/{{firmware_id}}/update" class="row-form">
             <input name="size_mb" type="number" min="0" step="0.01" value="{{size_mb}}" required>
