@@ -20,7 +20,7 @@
             <button type="submit">Save</button>
           </form>
         </td>
-        <td>{{created_at}}</td>
+        <td>{{formatDateTime created_at}}</td>
         <td>
           <form method="post" action="/customers/{{customer_id}}/delete" onsubmit="return confirm('Delete this customer and their devices/tickets?')">
             <button class="danger" type="submit">Delete</button>
