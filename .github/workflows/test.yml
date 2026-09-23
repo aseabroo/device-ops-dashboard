@@ -15,9 +15,56 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run unit tests
+        run: npm run test:unit
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: device_ops
+          MYSQL_USER: device_ops
+          MYSQL_PASSWORD: device_ops
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USER: device_ops
+      DB_PASSWORD: device_ops
+      DB_NAME: device_ops
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Initialize database
+        run: |
+          mysql -h127.0.0.1 -uroot -proot < database/schema.sql
+          mysql -h127.0.0.1 -uroot -proot < database/seed.sql
+
+      - name: Run integration tests
+        run: npm run test:integration
