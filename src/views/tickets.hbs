@@ -1,0 +1,25 @@
+<h2>Service Tickets</h2>
+<table>
+  <thead><tr><th>ID</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th></tr></thead>
+  <tbody>
+    {{#each tickets}}
+      <tr>
+        <td>{{ticket_id}}</td>
+        <td>{{customer_name}}</td>
+        <td>{{serial_number}}</td>
+        <td>{{summary}}</td>
+        <td>
+          <form method="post" action="/tickets/{{ticket_id}}/status">
+            <select name="status">
+              <option value="{{status}}">{{status}}</option>
+              <option value="open">open</option>
+              <option value="in_progress">in_progress</option>
+              <option value="resolved">resolved</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
