@@ -1,9 +1,46 @@
 <h2>Firmware Releases</h2>
+
+<form method="post" action="/firmware" class="panel form-grid">
+  <label>Version <input name="version" placeholder="2.7.0" required></label>
+  <label>Released on <input name="released_on" type="date" required></label>
+  <label>Size (MB) <input name="size_mb" type="number" min="0" step="0.01" required></label>
+  <label>Status
+    <select name="release_status">
+      <option value="planned">planned</option>
+      <option value="active">active</option>
+      <option value="deprecated">deprecated</option>
+    </select>
+  </label>
+  <button type="submit">Add release</button>
+</form>
+
+<div class="table-wrap">
 <table>
-  <thead><tr><th>ID</th><th>Version</th><th>Released</th><th>Size (MB)</th><th>Status</th></tr></thead>
+  <thead><tr><th>Version</th><th>Released</th><th>Update</th><th>Actions</th></tr></thead>
   <tbody>
     {{#each firmware}}
-      <tr><td>{{firmware_id}}</td><td>{{version}}</td><td>{{released_on}}</td><td>{{size_mb}}</td><td>{{release_status}}</td></tr>
+      <tr>
+        <td><strong>{{version}}</strong></td>
+        <td>{{released_on}}</td>
+        <td>
+          <form method="post" action="/firmware/{{firmware_id}}/update" class="row-form">
+            <input name="size_mb" type="number" min="0" step="0.01" value="{{size_mb}}" required>
+            <select name="release_status">
+              <option value="{{release_status}}">{{release_status}}</option>
+              <option value="planned">planned</option>
+              <option value="active">active</option>
+              <option value="deprecated">deprecated</option>
+            </select>
+            <button type="submit">Save</button>
+          </form>
+        </td>
+        <td>
+          <form method="post" action="/firmware/{{firmware_id}}/delete" onsubmit="return confirm('Delete this firmware release?')">
+            <button class="danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
     {{/each}}
   </tbody>
 </table>
+</div>
